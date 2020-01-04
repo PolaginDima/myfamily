@@ -10,6 +10,7 @@ RM := rm -rf
 -include sources.mk
 -include src/workbdupdate/subdir.mk
 -include src/tests/subdir.mk
+-include src/log/subdir.mk
 -include src/WORKBD/subdir.mk
 -include src/UI/subdir.mk
 -include src/IF/subdir.mk

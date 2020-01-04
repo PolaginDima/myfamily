@@ -1,96 +1,82 @@
-src/myfamily.d: ../src/myfamily.cpp ../src/tests/test.h \
- ../src/tests/../DOP//globfunc.h ../src/tests/../people.h \
- ../src/tests/../DOP/defineerrors.h ../src/tests/../observer.h \
- ../src/tests/../IF/datasource.h ../src/tests/../IF/model.h \
- ../src/tests/../IF/../people.h ../src/tests/../IF/../DOP/globfunc.h \
- ../src/tests/../IF/cmd.h ../src/tests/../IF/datasource.h \
- ../src/tests/../IF/../DOP/defineerrors.h \
- ../src/tests/../IF/../WORKBD/workbd.h \
- ../src/tests/../IF/../WORKBD/../workbdupdate/workbdupdate.h \
- ../src/tests/../IF/../WORKBD/../workbdupdate/workbdver.h \
- ../src/tests/../IF/../WORKBD/../workbdupdate/../WORKBD/workbdimp.h \
- ../src/tests/../IF/../WORKBD/../workbdupdate/../WORKBD/../people.h \
- ../src/tests/../IF/../WORKBD/workbdtemp.h \
- ../src/tests/../IF/../WORKBD/workbdimp.h \
- ../src/tests/../IF/../WORKBD/../DOP/globfunc.h \
- ../src/tests/../IF/../WORKBD/workbdsqlite.h \
- ../src/tests/../IF/../WORKBD/../people.h ../src/tests/../UI/peui.h \
- ../src/tests/../UI/../IF/model.h ../src/tests/../UI/../people.h \
- ../src/tests/../UI/../IF/history.h ../src/tests/../UI/../IF/cmd.h \
- ../src/tests/../IF/history.h ../src/tests/../application.h \
- ../src/tests/../UI/peui.h ../src/tests/../people.h \
- ../src/tests/../IF/model.h ../src/tests/../IF/datasource.h \
- ../src/tests/../WORKBD/workbd.h ../src/tests/../DOP/defineerrors.h \
- ../src/consolework.h
-
-../src/tests/test.h:
-
-../src/tests/../DOP//globfunc.h:
-
-../src/tests/../people.h:
-
-../src/tests/../DOP/defineerrors.h:
-
-../src/tests/../observer.h:
-
-../src/tests/../IF/datasource.h:
-
-../src/tests/../IF/model.h:
-
-../src/tests/../IF/../people.h:
-
-../src/tests/../IF/../DOP/globfunc.h:
-
-../src/tests/../IF/cmd.h:
-
-../src/tests/../IF/datasource.h:
-
-../src/tests/../IF/../DOP/defineerrors.h:
-
-../src/tests/../IF/../WORKBD/workbd.h:
-
-../src/tests/../IF/../WORKBD/../workbdupdate/workbdupdate.h:
-
-../src/tests/../IF/../WORKBD/../workbdupdate/workbdver.h:
-
-../src/tests/../IF/../WORKBD/../workbdupdate/../WORKBD/workbdimp.h:
-
-../src/tests/../IF/../WORKBD/../workbdupdate/../WORKBD/../people.h:
-
-../src/tests/../IF/../WORKBD/workbdtemp.h:
-
-../src/tests/../IF/../WORKBD/workbdimp.h:
-
-../src/tests/../IF/../WORKBD/../DOP/globfunc.h:
-
-../src/tests/../IF/../WORKBD/workbdsqlite.h:
-
-../src/tests/../IF/../WORKBD/../people.h:
-
-../src/tests/../UI/peui.h:
-
-../src/tests/../UI/../IF/model.h:
-
-../src/tests/../UI/../people.h:
-
-../src/tests/../UI/../IF/history.h:
-
-../src/tests/../UI/../IF/cmd.h:
-
-../src/tests/../IF/history.h:
-
-../src/tests/../application.h:
-
-../src/tests/../UI/peui.h:
-
-../src/tests/../people.h:
-
-../src/tests/../IF/model.h:
-
-../src/tests/../IF/datasource.h:
-
-../src/tests/../WORKBD/workbd.h:
-
-../src/tests/../DOP/defineerrors.h:
+src/myfamily.d: ../src/myfamily.cpp ../src/consolework.h \
+ ../src/application.h ../src/UI/peui.h ../src/UI/../IF/model.h \
+ ../src/UI/../IF/../people.h ../src/UI/../IF/../DOP/defineerrors.h \
+ ../src/UI/../IF/../observer.h ../src/UI/../IF/../DOP/globfunc.h \
+ ../src/UI/../people.h ../src/UI/../IF/history.h ../src/UI/../IF/cmd.h \
+ ../src/UI/../IF/datasource.h ../src/UI/../IF/../DOP/defineerrors.h \
+ ../src/UI/../IF/../workbdadapter.h ../src/UI/../IF/../people.h \
+ ../src/UI/../IF/../WORKBD/workbd.h \
+ ../src/UI/../IF/../WORKBD/../workbdupdate/workbdupdate.h \
+ ../src/UI/../IF/../WORKBD/../workbdupdate/workbdver.h \
+ ../src/UI/../IF/../WORKBD/../workbdupdate/../WORKBD/workbdimp.h \
+ ../src/UI/../IF/../WORKBD/../workbdupdate/../WORKBD/../people.h \
+ ../src/UI/../IF/../WORKBD/../workbdupdate/../log/log_trace.h \
+ ../src/UI/../IF/../WORKBD/workbdtemp.h \
+ ../src/UI/../IF/../WORKBD/workbdimp.h \
+ ../src/UI/../IF/../WORKBD/../DOP/globfunc.h \
+ ../src/UI/../IF/../WORKBD/workbdsqlite.h \
+ ../src/UI/../IF/../WORKBD/../people.h ../src/UI/../IF/../DOP/globfunc.h \
+ ../src/people.h ../src/IF/model.h ../src/IF/datasource.h \
+ ../src/workbdadapter.h
 
 ../src/consolework.h:
+
+../src/application.h:
+
+../src/UI/peui.h:
+
+../src/UI/../IF/model.h:
+
+../src/UI/../IF/../people.h:
+
+../src/UI/../IF/../DOP/defineerrors.h:
+
+../src/UI/../IF/../observer.h:
+
+../src/UI/../IF/../DOP/globfunc.h:
+
+../src/UI/../people.h:
+
+../src/UI/../IF/history.h:
+
+../src/UI/../IF/cmd.h:
+
+../src/UI/../IF/datasource.h:
+
+../src/UI/../IF/../DOP/defineerrors.h:
+
+../src/UI/../IF/../workbdadapter.h:
+
+../src/UI/../IF/../people.h:
+
+../src/UI/../IF/../WORKBD/workbd.h:
+
+../src/UI/../IF/../WORKBD/../workbdupdate/workbdupdate.h:
+
+../src/UI/../IF/../WORKBD/../workbdupdate/workbdver.h:
+
+../src/UI/../IF/../WORKBD/../workbdupdate/../WORKBD/workbdimp.h:
+
+../src/UI/../IF/../WORKBD/../workbdupdate/../WORKBD/../people.h:
+
+../src/UI/../IF/../WORKBD/../workbdupdate/../log/log_trace.h:
+
+../src/UI/../IF/../WORKBD/workbdtemp.h:
+
+../src/UI/../IF/../WORKBD/workbdimp.h:
+
+../src/UI/../IF/../WORKBD/../DOP/globfunc.h:
+
+../src/UI/../IF/../WORKBD/workbdsqlite.h:
+
+../src/UI/../IF/../WORKBD/../people.h:
+
+../src/UI/../IF/../DOP/globfunc.h:
+
+../src/people.h:
+
+../src/IF/model.h:
+
+../src/IF/datasource.h:
+
+../src/workbdadapter.h:

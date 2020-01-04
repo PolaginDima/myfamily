@@ -6,6 +6,7 @@
  */
 
 #include "consolework.h"
+#include "log/log_trace.h"
 
 static const string db_name = "test.dblite";//имя БД
 
@@ -49,15 +50,32 @@ void clearCin(){
 	//}
 }
 
+void displayDataSource(DataSource<People, ERR> &ds){
+	wcout << setw(int((123 + 12)/2)) << L"Список людей\n";
+	wcout << setw(3) << L"№" << setw(3) << L"id" << setw(25) << L"Фамилия" << setw(25) << L"Имя"
+			<< setw(25) << L"Отчество" << setw(5) << L"пол" << setw(10) << L"№ ошибки\n";
+	for(auto it = 0; it < ds.count(); it++){
+		ds.position(it);
+		wcout << setw(3) << it << setw(3) << ds.current()->getId() << setw(25) << ds.current()->getFam() << setw(25) << ds.current()->getName()
+				<<setw(25) << ds.current()->getOtch() << setw(5)
+				<< /*std::setiosflags(std::ios::boolalpha) << lst.getByIndex(it)->isWomen() << '\n';*/((ds.position(it)->isWomen())?L"жен":L"муж")
+				<< setw(10) << ds.validate(ds.current()).any()
+				<< std::endl;
+	}
+	wcout << L"Всего людей: " << ds.count() << '\n' <<endl;
+}
+
 void mainDisplay(){
+	LOG_TRACE();
+	//LOG_TRACE_STRING("проверка");
 	/*отобразим меню*/
-	//std::stringstream ss;
-	//vector<People *> l_sp;//хранилище людей
 	char key = 0;
 
-	Workbdupdate(new Workbdsqlite(db_name)).executeUpdate();
+	Application &app = theApp();
+	return;
+	//Workbdupdate(new Workbdsqlite(db_name)).executeUpdate();
 
-	Workbd &bd = Workbd::instance();
+	WorkbdA &bd = theApp().getbd();
 
 	while (1){
 		std::wcout.width(40);
@@ -85,11 +103,12 @@ void executeAction(char &key){
 	}
 }
 
-void displayPeoples(function<PeopleEditUI* (int depth, History *, DataSource<People, ERR> &, Application *)> cmdAdd){
+void displayPeoples(function<PeopleEditUI* (int depth, History *, DataSource<People, ERR> &, Application &)> cmdAdd){
 	DataSource<People, ERR> l_dsp(l_sp);//интерфейс для взаимодействия с хранилищем
 	char key;
 	History *hist = new History();
-	Application *app = new Application();
+	//Application *app = new Application();
+	Application &app = theApp();
 
 	while (key != '0'){
 		displayDataSource(l_dsp);

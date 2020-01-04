@@ -24,8 +24,9 @@ C_UPPER_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 src/workbdupdate \
-src/tests \
 src \
+src/tests \
+src/log \
 src/WORKBD \
 src/UI \
 src/IF \

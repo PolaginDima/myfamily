@@ -3,7 +3,8 @@ src/workbdupdate/ver20.d: ../src/workbdupdate/ver20.cpp \
  ../src/workbdupdate/../WORKBD/workbdimp.h \
  ../src/workbdupdate/../WORKBD/../people.h \
  ../src/workbdupdate/../WORKBD/../DOP/defineerrors.h \
- ../src/workbdupdate/../WORKBD/../observer.h
+ ../src/workbdupdate/../WORKBD/../observer.h \
+ ../src/workbdupdate/../log/log_trace.h
 
 ../src/workbdupdate/workbdver.h:
 
@@ -14,3 +15,5 @@ src/workbdupdate/ver20.d: ../src/workbdupdate/ver20.cpp \
 ../src/workbdupdate/../WORKBD/../DOP/defineerrors.h:
 
 ../src/workbdupdate/../WORKBD/../observer.h:
+
+../src/workbdupdate/../log/log_trace.h:

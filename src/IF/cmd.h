@@ -14,7 +14,8 @@
 //#include <utility>
 #include "datasource.h"
 #include "../DOP/defineerrors.h"
-#include "../WORKBD/workbd.h"
+//#include "../WORKBD/workbd.h"
+#include "../workbdadapter.h"
 
 using std::wcout;//временно
 using std::cout;//временно
@@ -32,26 +33,22 @@ class CmdAdd: public Cmd{
 	T *m_Cache;
 
 	DataSource<T, ERR> &m_ds;
-	Workbd &m_bd;
+	WorkbdA &m_bd;
 	Action m_action;
 public:
-	CmdAdd(T *t, DataSource<T, ERR> &ds, Workbd &bd, Action act = Action::EXECUTE)
+	CmdAdd(T *t, DataSource<T, ERR> &ds, WorkbdA &bd, Action act = Action::EXECUTE)
 :m_Cache(t), m_ds(ds),m_bd(bd), m_action(act){
-		wcout << L"Конструктор CmdAdd " << (long)this << std::endl;
 	}
 
 	CmdAdd(const CmdAdd &f)//конструктор копирования
 	:m_Cache(f.m_Cache), m_ds(f.m_ds),m_bd(f.m_bd), m_action(f.m_action){
-		wcout << L"Конструктор копирования CmdAdd " << (long)this << std::endl;
 	}
 
 	CmdAdd(CmdAdd &&f)//конструктор переноса
 	:m_Cache(f.m_Cache), m_ds(f.m_ds),m_bd(f.m_bd), m_action(f.m_action){
-		wcout << L"Конструктор переноса CmdAdd " << (long)this << std::endl;
 	}
 
 	~CmdAdd()override {
-		wcout << L"Деструктор CmdAdd " << (long)this << std::endl;
 	};
 
 	/*CmdAdd &operator=(const CmdAdd &cmd){
@@ -97,26 +94,22 @@ class CmdEdit: public Cmd{
 	T *m_Cache;
 	T *m_Current;
 	DataSource<T, ERR> &m_ds;
-	Workbd &m_bd;
+	WorkbdA &m_bd;
 	Action m_action;
 public:
-	CmdEdit(T *t, DataSource<T, ERR> &ds, Workbd &bd, Action act = Action::EXECUTE)
+	CmdEdit(T *t, DataSource<T, ERR> &ds, WorkbdA &bd, Action act = Action::EXECUTE)
 :m_Cache(new People(*t)), m_Current(t), m_ds(ds),m_bd(bd), m_action(act){
-		wcout << L"Конструктор CmdEdit " << (long)this << std::endl;
 	}
 
 	CmdEdit(const CmdEdit &f)//конструктор копирования
 	:m_Cache(f.m_Cache), m_Current(f.m_Current), m_ds(f.m_ds),m_bd(f.m_bd), m_action(f.m_action){
-		wcout << L"Конструктор копирования CmdEdit " << (long)this << std::endl;
 	}
 
 	CmdEdit(CmdEdit &&f)//конструктор переноса
 	:m_Cache(f.m_Cache), m_Current(f.m_Current), m_ds(f.m_ds),m_bd(f.m_bd), m_action(f.m_action){
-		wcout << L"Конструктор переноса CmdEdit " << (long)this << std::endl;
 	}
 
 	~CmdEdit()override {
-		wcout << L"Деструктор CmdEdit " << (long)this << std::endl;
 	};
 
 	void operator ()() override{
@@ -135,26 +128,22 @@ class CmdDelete: public Cmd{
 	T *m_Cache;
 	T *m_Current;
 	DataSource<T, ERR> &m_ds;
-	Workbd &m_bd;
+	WorkbdA &m_bd;
 	Action m_action;
 public:
-	CmdDelete(DataSource<T, ERR> &ds, Workbd &bd, Action act = Action::EXECUTE)
+	CmdDelete(DataSource<T, ERR> &ds, WorkbdA &bd, Action act = Action::EXECUTE)
 :m_Cache(new People(*(ds.current()))), m_Current(ds.current()), m_ds(ds),m_bd(bd), m_action(act){
-		wcout << L"Конструктор CmdDelete " << (long)this << std::endl;
 	}
 
 	CmdDelete(const CmdDelete &f)//конструктор копирования
 	:m_Cache(f.m_Cache), m_Current(f.m_Current), m_ds(f.m_ds),m_bd(f.m_bd), m_action(f.m_action){
-		wcout << L"Конструктор копирования CmdDelete " << (long)this << std::endl;
 	}
 
 	CmdDelete(CmdDelete &&f)//конструктор переноса
 	:m_Cache(f.m_Cache), m_Current(f.m_Current), m_ds(f.m_ds),m_bd(f.m_bd), m_action(f.m_action){
-		wcout << L"Конструктор переноса CmdDelete " << (long)this << std::endl;
 	}
 
 	~CmdDelete()override {
-		wcout << L"Деструктор CmdDelete " << (long)this << std::endl;
 	};
 
 	void operator ()() override{

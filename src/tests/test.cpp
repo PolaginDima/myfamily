@@ -86,21 +86,6 @@ void displayPeople(const People *p){
 			<<endl;
 }
 
-void displayDataSource(DataSource<People, ERR> &ds){
-	wcout << setw(int((123 + 12)/2)) << L"Список людей\n";
-	wcout << setw(3) << L"№" << setw(3) << L"id" << setw(25) << L"Фамилия" << setw(25) << L"Имя"
-			<< setw(25) << L"Отчество" << setw(5) << L"пол" << setw(10) << L"№ ошибки\n";
-	for(auto it = 0; it < ds.count(); it++){
-		ds.position(it);
-		wcout << setw(3) << it << setw(3) << ds.current()->getId() << setw(25) << ds.current()->getFam() << setw(25) << ds.current()->getName()
-				<<setw(25) << ds.current()->getOtch() << setw(5)
-				<< /*std::setiosflags(std::ios::boolalpha) << lst.getByIndex(it)->isWomen() << '\n';*/((ds.position(it)->isWomen())?L"жен":L"муж")
-				<< setw(10) << ds.validate(ds.current()).any()
-				<< std::endl;
-	}
-	wcout << L"Всего людей: " << ds.count() << '\n' <<endl;
-}
-
 void test(){
 	//testPeople();
 	//testDataSource();
@@ -156,22 +141,22 @@ void testModelPeople(){
 }
 
 void testCmdAddSaveUndo(){
-	Application *app = new Application();
+	Application &app = app::theApp();
 	vector<People *> l_sp;//хранилище людей
 	DataSource<People, ERR> l_dsp(l_sp);
 	History *hist = new History();
 	int total = l_dsp.count();
 
 	//создадим команду для вызова PEUI для добавления
-	function<PeopleEditUI* (int depth, History *)> cmdAdd = [&l_dsp, app](int depth, History *hist)->PeopleEditUI*{
+	function<PeopleEditUI* (int depth, History *)> cmdAdd = [&l_dsp, &app](int depth, History *hist)->PeopleEditUI*{
 		People *p = new People();
 
 		l_dsp.add(p);
 
-		hist->add({CmdAdd<People>(p, l_dsp, Workbd::instance()),
-				CmdAdd<People>(p, l_dsp, Workbd::instance(), CmdAdd<People>::Action::UNDO),
+		hist->add({CmdAdd<People>(p, l_dsp, theApp().getbd()),
+				CmdAdd<People>(p, l_dsp, theApp().getbd(), CmdAdd<People>::Action::UNDO),
 				0});
-		return app->makePEUI(depth, l_dsp, p, hist);
+		return app.makePEUI(depth, l_dsp, p, hist);
 	};
 
 	wcout <<L"\nПроверяем cmdAdd()" << std::endl;
@@ -216,7 +201,8 @@ void testCmdAddSaveUndo(){
 }
 
 void testCmdEditSaveUndo(){
-	Application *app = new Application();
+	Application &app = theApp();
+	//Application *app = new Application();
 	vector<People *> l_sp;//хранилище людей
 	for(auto it = 1; it <= nPeople; it++) {
 		People *p = createRNDPeople();
@@ -233,14 +219,14 @@ void testCmdEditSaveUndo(){
 	//int total = l_dsp.count();
 
 	//создадим команду для вызова PEUI для редактирования
-	function<PeopleEditUI* (int depth, History *)> cmdEdit = [&l_dsp, app](int depth, History *hist)->PeopleEditUI*{
+	function<PeopleEditUI* (int depth, History *)> cmdEdit = [&l_dsp, &app](int depth, History *hist)->PeopleEditUI*{
 		People *p = l_dsp.current();
 
-		hist->add({CmdEdit<People>(p, l_dsp, Workbd::instance()),
-			CmdEdit<People>(p, l_dsp, Workbd::instance(), CmdAdd<People>::Action::UNDO),
+		hist->add({CmdEdit<People>(p, l_dsp, theApp().getbd()),
+			CmdEdit<People>(p, l_dsp, theApp().getbd(), CmdAdd<People>::Action::UNDO),
 			0});
 
-		return app->makePEUI(depth, l_dsp, p, hist);
+		return app.makePEUI(depth, l_dsp, p, hist);
 	};
 
 	displayDataSource(l_dsp);
@@ -289,7 +275,8 @@ void testCmdEditSaveUndo(){
 }
 
 void testCmdDelete(){
-	Application *app = new Application();
+	Application &app = theApp();
+	//Application *app = new Application();
 	vector<People *> l_sp;//хранилище людей
 	for(auto it = 1; it <= nPeople; it++) {
 		People *p = createRNDPeople();
@@ -309,20 +296,20 @@ void testCmdDelete(){
 	displayDataSource(l_dsp);
 
 	//создадим команду для удаления
-	function<void (int depth, History *, ERR &)> cmdDelete = [&l_dsp, app](int depth, History *hist, ERR &err){
+	function<void (int depth, History *, ERR &)> cmdDelete = [&l_dsp, &app](int depth, History *hist, ERR &err){
 
 		l_dsp.controlOfRemove(l_dsp.current(), err);
 		if (err == ERRFATAL)
 			return err;
 
 		if (!depth){
-			CmdDelete<People>(l_dsp, Workbd::instance())();
+			CmdDelete<People>(l_dsp, theApp().getbd())();
 			return err;
 		}
 
 		l_dsp.removeLocal(l_dsp.current());
-		hist->add({CmdDelete<People>(l_dsp, Workbd::instance()),
-			CmdDelete<People>(l_dsp, Workbd::instance(), CmdDelete<People>::Action::UNDO),
+		hist->add({CmdDelete<People>(l_dsp, theApp().getbd()),
+			CmdDelete<People>(l_dsp, theApp().getbd(), CmdDelete<People>::Action::UNDO),
 			0});
 		return err;
 	};
@@ -348,21 +335,22 @@ void testCmdDelete(){
  * Проверка вложенных команд
  * на применение и отмену*/
 void testCmdDepth(){
-	Application *app = new Application();
+	Application &app = theApp();
+	//Application *app = new Application();
 	vector<People *> l_sp;//хранилище людей
 	DataSource<People, ERR> l_dsp(l_sp);
 	History *hist = new History();
 
 	//создадим команду для вызова PEUI для добавления
-	function<PeopleEditUI* (int depth, History *)> cmdAdd = [&l_dsp, app](int depth, History *hist)->PeopleEditUI*{
+	function<PeopleEditUI* (int depth, History *)> cmdAdd = [&l_dsp, &app](int depth, History *hist)->PeopleEditUI*{
 		People *p = new People();
 
 		l_dsp.add(p);
 
-		hist->add({CmdAdd<People>(p, l_dsp, Workbd::instance()),
-			CmdAdd<People>(p, l_dsp, Workbd::instance(), CmdAdd<People>::Action::UNDO),
+		hist->add({CmdAdd<People>(p, l_dsp, theApp().getbd()),
+			CmdAdd<People>(p, l_dsp, theApp().getbd(), CmdAdd<People>::Action::UNDO),
 			depth});
-		return app->makePEUI(depth, l_dsp, p, hist);
+		return app.makePEUI(depth, l_dsp, p, hist);
 	};
 
 	PeopleEditUI *peui1 = cmdAdd(0, hist);//добавили

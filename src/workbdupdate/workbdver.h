@@ -8,7 +8,9 @@
 #ifndef WORKBDUPDATE_WORKBDVER_H_
 #define WORKBDUPDATE_WORKBDVER_H_
 
+#include <cstdlib>  // for exit(), EXIT_FAILURE
 #include "../WORKBD/workbdimp.h"
+#include "../log/log_trace.h"
 
 class Workbdver{
 protected:
@@ -18,11 +20,12 @@ protected:
 	virtual bool checkVersion() const = 0;
 public:
 	explicit Workbdver(Workbdimp *bd);
-	explicit Workbdver(Workbdver *previouse_ver);
+	explicit Workbdver(Workbdver &previouse_ver);
 
-	virtual ~Workbdver(){/*std::wcout << L"Деструктор Workbdver" << std::endl;*/};
+	virtual ~Workbdver(){};
 	void setNext(Workbdver *next_ = nullptr);
-	virtual void handle() = 0;
+	/*virtual */void handle();
+	virtual void doUpdate() = 0;
 };
 
 /*Создаем начальное состояние БД*/
@@ -32,9 +35,10 @@ private:
 	void createStruct();
 public:
 	Workbdver10(Workbdimp *bd):Workbdver(bd){};
-	Workbdver10(Workbdver *previouse_ver):Workbdver(previouse_ver){}
-	~Workbdver10() override{};
-	void handle() override;
+	Workbdver10(Workbdver &previouse_ver):Workbdver(previouse_ver){}
+	~Workbdver10() override{LOG_TRACE();};
+	//void handle() override;
+	void doUpdate() override;
 };
 
 class Workbdver20: public Workbdver{
@@ -42,9 +46,10 @@ private:
 	bool checkVersion() const override;
 public:
 	Workbdver20(Workbdimp *bd):Workbdver(bd){}
-	Workbdver20(Workbdver *previouse_ver):Workbdver(previouse_ver){}
-	~Workbdver20() override{};
-	void handle() override;
+	Workbdver20(Workbdver &previouse_ver):Workbdver(previouse_ver){}
+	~Workbdver20() override{LOG_TRACE();};
+	//void handle() override;
+	void doUpdate() override;
 };
 
 #endif /* WORKBDUPDATE_WORKBDVER_H_ */

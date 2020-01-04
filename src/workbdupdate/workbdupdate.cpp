@@ -8,30 +8,21 @@
 #include "workbdupdate.h"
 
 Workbdupdate::Workbdupdate(Workbdimp *bd):m_bd(bd){
-	assert(!bd->connection());
 	if (bd->connection()){
 		exit(EXIT_FAILURE);
 		return;
 	}
 
 	//первая версия базы
-	Workbdver *prev = new Workbdver10(bd);
-	m_vers.push_back(prev);
+	Workbdver10 v1(bd);
 
 	//вторая версия базы
-	prev = new Workbdver20(prev);
-	m_vers.push_back(prev);
+	Workbdver20 v2(v1);
+
+	//Запускаем проверку и обновление БД(если нужно)
+	v1.handle();
 };
 
-Workbdupdate::~Workbdupdate(){
-	delete m_bd;
-}
-
-void Workbdupdate::executeUpdate(){
-	m_vers.front()->handle();
-	//освободим память
-	while (!m_vers.empty()){
-		delete m_vers.front();
-		m_vers.pop_front();
-	}
-}
+/*Workbdupdate::~Workbdupdate(){
+	//delete m_bd;
+}*/

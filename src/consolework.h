@@ -9,12 +9,14 @@
 #define CONSOLEWORK_H_
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <limits>
-//#include <tr1/functional>
-#include "tests/test.h"
+#include <tr1/functional>
+//#include "tests/test.h"
+#include "application.h"
 //#include "people.h"
 
 #include <stdio.h>
@@ -27,7 +29,11 @@
 
 using std::string;
 using std::cin;
+using std::wcout;
+using std::setw;
 using std::vector;
+using app::theApp;
+using app::Application;
 
 #ifdef __linux__
 struct TerminalOpt{//настройка терминала
@@ -62,21 +68,23 @@ void clearCin();
 
 static vector<People *> l_sp;//хранилище людей
 
+void displayDataSource(DataSource<People, ERR> &);
+
 //команда для вызова для добавления человека
-static function<PeopleEditUI* (int depth, History *, DataSource<People, ERR> &, Application *)> cmdAddPeople = [](int depth, History *hist, DataSource<People, ERR> &l_dsp, Application *app)->PeopleEditUI*{
+static function<PeopleEditUI* (int depth, History *, DataSource<People, ERR> &, Application &)> cmdAddPeople = [](int depth, History *hist, DataSource<People, ERR> &l_dsp, Application &app)->PeopleEditUI*{
 	People *p = new People();
 
 	 l_dsp.add(p);
 
-	 hist->add({CmdAdd<People>(p, l_dsp, Workbd::instance()),
-		 CmdAdd<People>(p, l_dsp, Workbd::instance(), CmdAdd<People>::Action::UNDO),
+	 hist->add({CmdAdd<People>(p, l_dsp, theApp().getbd()),
+		 CmdAdd<People>(p, l_dsp, theApp().getbd(), CmdAdd<People>::Action::UNDO),
 		 0});
-	 return app->makePEUI(depth, l_dsp, p, hist);
+	 return app.makePEUI(depth, l_dsp, p, hist);
 };
 
 void mainDisplay();
 void executeAction(char &key);
-void displayPeoples(function<PeopleEditUI* (int depth, History *, DataSource<People, ERR> &, Application *)>);
+void displayPeoples(function<PeopleEditUI* (int depth, History *, DataSource<People, ERR> &, Application &)>);
 void addPeople(PeopleEditUI* peui);
 void InputPeople(ModelPeople *model);
 string iInput(wstring);

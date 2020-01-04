@@ -25,6 +25,7 @@
 #include "../IF/history.h"
 #include "../application.h"
 #include "../DOP/defineerrors.h"
+#include "../consolework.h"
 
 using std::wcout;
 using std::cout;
@@ -37,6 +38,8 @@ using std::wstring;
 using std::vector;
 using std::tr1::function;
 using std::bitset;
+using app::theApp;
+using app::Application;
 
 int getIndex();
 
@@ -51,8 +54,6 @@ void fillRNDPeople(People *p);
 void displayPeople(const People *);
 
 //void displayLisPeople(ListPeople &);
-
-void displayDataSource(DataSource<People, ERR> &);
 
 void test();
 

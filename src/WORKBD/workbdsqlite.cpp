@@ -16,7 +16,6 @@ static sqlite3 *db = 0; // хэндл объекта соединение к Б�
 
 Workbdsqlite::Workbdsqlite(const string db_name)
 :m_db_name(db_name){
-	std::wcout << L"Конструктор Workbdsqlite" << std::endl;
 }
 
 Workbdsqlite::~Workbdsqlite(){
@@ -25,8 +24,6 @@ Workbdsqlite::~Workbdsqlite(){
 		sqlite3_close(db);
 		db = 0;
 	}
-	//this->close();
-	std::wcout << L"Деструктор Workbdsqlite" << std::endl;
 };
 
 const int Workbdsqlite::getLastId(){return 0;}
@@ -48,11 +45,8 @@ bool Workbdsqlite::exec(const string &sql) const{
 	if (sqlite3_exec(db, sql.c_str(), 0, 0, &err)){//;// выполняем _SQLquery
 		fprintf(stderr, "Error SQL query: %s\n", err);
 		sqlite3_free(err);
-		return false;
-	} return true;
-	/*wstring wsql;
-	toWstring(sql, std::locale(), wsql);
-	wcout << wsql << std::endl;*/
+		return true;
+	} return false;
 };
 
 void Workbdsqlite::openSQL(const string &sql){

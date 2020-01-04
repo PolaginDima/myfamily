@@ -12,11 +12,18 @@ Workbdver::Workbdver(Workbdimp *bd)
 	//std::wcout << L"Конструктор Workbdver" << std::endl;
 }
 
-Workbdver::Workbdver(Workbdver *previouse_ver):m_next(nullptr), m_bd(previouse_ver->m_bd){
-	previouse_ver->setNext(this);
+Workbdver::Workbdver(Workbdver &previouse_ver):m_next(nullptr), m_bd(previouse_ver.m_bd){
+	previouse_ver.setNext(this);
 	//std::wcout << L"Конструктор Workbdver" << std::endl;
 };
 
 void Workbdver::setNext(Workbdver *next_) {
 		m_next = next_;
 };
+
+void Workbdver::handle(){
+	if (checkVersion())
+		doUpdate();
+	if (m_next)
+		m_next->handle();
+}

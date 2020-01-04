@@ -7,12 +7,18 @@
 
 #include "application.h"
 
-Application::Application(){
-	wcout << L"Конструктор Application\n";
+static const string db_name = "test.dblite";//имя БД
+
+namespace app{
+Application::Application()
+:m_bd(new Workbdsqlite(db_name)){
 }
 
 Application::~Application(){
-	wcout << L"Деструктор Application\n";
+}
+
+WorkbdA &Application::getbd(){
+	return m_bd;
 }
 
 PeopleEditUI *Application::makePEUI(int depth, DataSource<People, ERR> &ds, People *people, History *hist){
@@ -40,4 +46,10 @@ PeopleEditUI *Application::makePEUI(int depth, DataSource<People, ERR> &ds, Peop
 
 	return l_peui;
 
+}
+
+Application &theApp(){
+	static Application app;
+	return app;
+}
 }

@@ -7,7 +7,7 @@
 //============================================================================
 
 #include <iostream>
-#include "tests/test.h"
+//#include "tests/test.h"
 #include "consolework.h"
 
 int main() {
